@@ -1,0 +1,52 @@
+<FrameLayout xmlns:android2="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="https://schemas.android.com/apk/res/android"
+    android2:layout_width="wrap_content"
+    android2:layout_height="wrap_content">
+
+
+    <fragment
+        android2:layout_width="match_parent"
+        android2:layout_height="match_parent"
+        android2:name="com.google.android.gms.maps.SupportMapFragment"
+        android2:id="@+id/map" />
+
+    <LinearLayout xmlns:android="https://schemas.android.com/apk/res/android"
+        xmlns:tools="https://schemas.android.com/tools"
+
+        android2:layout_width="match_parent"
+        android2:layout_height="wrap_content"
+        android2:orientation="vertical"
+        >
+
+        <Button
+            android2:layout_weight="1"
+            android2:id="@+id/btnRestaurant"
+            android2:text="Nearby Restaurants"
+            android2:layout_width="wrap_content"
+            android2:layout_height="wrap_content"
+
+            />
+
+        <Button
+            android2:id="@+id/btnHospital"
+            android2:layout_weight="1"
+            android2:text="Nearby Hospitals"
+            android2:layout_height="wrap_content"
+            android2:layout_width="wrap_content" />
+
+        <Button
+            android:id="@+id/btnSchool"
+            android2:layout_weight="1"
+            android2:text="Nearby Schools"
+            android2:layout_width="wrap_content"
+            android2:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+
+
+</FrameLayout>
+
