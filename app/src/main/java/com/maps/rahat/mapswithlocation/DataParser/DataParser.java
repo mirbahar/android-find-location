@@ -1,4 +1,4 @@
-package com.maps.rahat.mapswithlocation;
+package com.maps.rahat.mapswithlocation.DataParser;
 
 /**
  * Created by rahat on 1/31/17.
@@ -18,6 +18,7 @@ package com.maps.rahat.mapswithlocation;
  * Created by navneet on 23/7/16.
  */
 public class DataParser {
+
     public List<HashMap<String, String>> parse(String jsonData) {
         JSONArray jsonArray = null;
         JSONObject jsonObject;

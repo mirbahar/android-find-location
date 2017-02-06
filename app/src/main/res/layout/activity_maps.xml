@@ -7,10 +7,13 @@
 
 
     <fragment
+
         android2:layout_width="match_parent"
         android2:layout_height="match_parent"
         android2:name="com.google.android.gms.maps.SupportMapFragment"
-        android2:id="@+id/map" />
+        android2:id="@+id/map"
+
+        />
 
     <LinearLayout xmlns:android="https://schemas.android.com/apk/res/android"
         xmlns:tools="https://schemas.android.com/tools"
@@ -43,7 +46,24 @@
             android2:layout_width="wrap_content"
             android2:layout_height="wrap_content" />
 
+
     </LinearLayout>
+
+    <LinearLayout
+
+        android2:layout_width="wrap_content"
+        android2:layout_height="wrap_content"
+        android2:orientation="vertical"
+        >
+        <ListView
+            android2:id="@+id/restaurantListView"
+            android2:layout_width="wrap_content"
+            android2:layout_height="wrap_content">
+
+        </ListView>
+
+    </LinearLayout>
+
 
 
 
