@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -73,6 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             Toast.makeText(this, "Google Play service  available", Toast.LENGTH_SHORT).show();
         }
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -136,18 +138,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
 
                 mMap.clear();
-
+                if(mLastLocation != null) {
                 String url = getUrl(mLastLocation.getLatitude(), mLastLocation.getLongitude(), Restaurant);
-                Object[] DataTransfer = new Object[2];
-                DataTransfer[0] = mMap;
-                DataTransfer[1] = url;
-                Log.d("onClick", url);
 
-                GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData(MapsActivity.this,listView);
+                    Object[] DataTransfer = new Object[2];
+                    DataTransfer[0] = mMap;
+                    DataTransfer[1] = url;
+                    Log.d("onClick", url);
 
-                getNearbyPlacesData.execute(DataTransfer);
+                    GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData(MapsActivity.this, listView);
 
-                Toast.makeText(MapsActivity.this,"Nearby Restaurants", Toast.LENGTH_LONG).show();
+                    getNearbyPlacesData.execute(DataTransfer);
+
+                    Toast.makeText(MapsActivity.this, "Nearby Restaurants", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(MapsActivity.this, "Please Location Service Enabled", Toast.LENGTH_SHORT).show();
+                    return ;
+
+                }
             }
         });
 

@@ -3,12 +3,15 @@ package com.maps.rahat.mapswithlocation;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.util.Log;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,8 +22,11 @@ import com.maps.rahat.mapswithlocation.Activity.AddressActivity;
 import com.maps.rahat.mapswithlocation.Activity.MapsActivity;
 import com.maps.rahat.mapswithlocation.DataParser.DataParser;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,17 +68,22 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Log.d("GooglePlacesReadTask", "onPostExecute Entered");
+        if(result != null){
 
-        List<HashMap<String, String>> nearbyPlacesList = null;
+            Log.d("GooglePlacesReadTask", "onPostExecute Entered");
 
-        Log.d("tt", "onPostExecute: "+result);
-        DataParser dataParser = new DataParser();
-        nearbyPlacesList =  dataParser.parse(result);
-      //  ShowNearbyPlaces(nearbyPlacesList);
-        listNearbyPlaces(nearbyPlacesList);
+            List<HashMap<String, String>> nearbyPlacesList = null;
 
-        Log.d("GooglePlacesReadTask", "onPostExecute Exit");
+            Log.d("tt", "onPostExecute: "+result);
+            DataParser dataParser = new DataParser();
+            nearbyPlacesList =  dataParser.parse(result);
+          //  ShowNearbyPlaces(nearbyPlacesList);
+            listNearbyPlaces(nearbyPlacesList);
+
+            Log.d("GooglePlacesReadTask", "onPostExecute Exit");
+        } else {
+            Toast.makeText(context, "Internet Connection Not Available", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void ShowNearbyPlaces(List<HashMap<String, String>> nearbyPlacesList) {
@@ -108,18 +119,36 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
 
             String placeName = googlePlaceList.get("place_name");
             String vicinity = googlePlaceList.get("vicinity");
+            String icon = googlePlaceList.get("icon");
             LatLng latLng = new LatLng(lat, lng);
             googlePlaceList.put("placeName",placeName);
-//            googlePlaceList.put("vicinity",vicinity);
+            googlePlaceList.put("vicinity",vicinity);
             myPlaceList.add(googlePlaceList);
+
         }
-        String[] from = new String[] {"placeName"};
-        int[] to = new int[] { R.id.textView1 };
+        String[] from = new String[] {"placeName","vicinity"};
+        int[] to = new int[] { R.id.textView1 , R.id.addressTV };
         SimpleAdapter adapter = new SimpleAdapter(context, myPlaceList, R.layout.activity_place_row, from, to);
         listView.setAdapter(adapter);
 
+    }
 
+    private Bitmap imageLoad(String url) {
 
+        try {
+
+            URL urlConnection = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) urlConnection
+                    .openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

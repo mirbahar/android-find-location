@@ -11,10 +11,33 @@
     android:orientation="vertical"
     tools:context="com.maps.rahat.mapswithlocation.Activity.PlaceListActivity">
 
-  <!--  <ListView
-        android:id="@+id/restaurantListView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+  <Button
+      android:id="@+id/btnRestaurantList"
+      android:text="Nearby Restaurants"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      />
 
-    </ListView>-->
+  <Button
+      android:id="@+id/btnHospital"
+      android:text="Nearby Hospitals"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      />
+
+  <Button
+      android:id="@+id/btnSchool"
+
+      android:text="Nearby Schools"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+<ListView
+    android:id="@+id/listLV"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+</ListView>
+
 </LinearLayout>
