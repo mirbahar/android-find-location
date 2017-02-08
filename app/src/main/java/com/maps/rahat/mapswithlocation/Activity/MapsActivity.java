@@ -1,10 +1,12 @@
 package com.maps.rahat.mapswithlocation.Activity;
 
 
+import android.Manifest;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,6 +31,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -60,11 +63,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     double latitude ;
     double longitude ;
     ListView listView;
+    Button btnMasjidBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            checkLocationPermission();
+        }
         listView = (ListView)findViewById(R.id.restaurantListView);
 
 
@@ -130,6 +139,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         Button btnRestaurant = (Button) findViewById(R.id.btnRestaurant);
+        Button btnCafe = (Button) findViewById(R.id.btnCafe);
+
+        Button btnAtmBooth = (Button) findViewById(R.id.btnAtmBooth);
+        btnMasjidBtn = (Button) findViewById(R.id.btnMasjidBtn);
 
         btnRestaurant.setOnClickListener(new View.OnClickListener() {
             String Restaurant = "restaurant";
@@ -158,6 +171,88 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         });
+        btnCafe.setOnClickListener(new View.OnClickListener() {
+            String cafe = "cafe";
+
+            @Override
+            public void onClick(View v) {
+
+                mMap.clear();
+                if(mLastLocation != null) {
+                String url = getUrl(mLastLocation.getLatitude(), mLastLocation.getLongitude(), cafe);
+
+                    Object[] DataTransfer = new Object[2];
+                    DataTransfer[0] = mMap;
+                    DataTransfer[1] = url;
+                    Log.d("onClick", url);
+
+                    GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData(MapsActivity.this, listView);
+
+                    getNearbyPlacesData.execute(DataTransfer);
+
+                    Toast.makeText(MapsActivity.this, "Nearby Cafe", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(MapsActivity.this, "Please Location Service Enabled", Toast.LENGTH_SHORT).show();
+                    return ;
+
+                }
+            }
+        });
+        btnMasjidBtn.setOnClickListener(new View.OnClickListener() {
+            String masjid = "masjid";
+
+            @Override
+            public void onClick(View v) {
+
+                mMap.clear();
+                if(mLastLocation != null) {
+                String url = getUrl(mLastLocation.getLatitude(), mLastLocation.getLongitude(), masjid);
+
+                    Object[] DataTransfer = new Object[2];
+                    DataTransfer[0] = mMap;
+                    DataTransfer[1] = url;
+                    Log.d("onClick", url);
+
+                    GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData(MapsActivity.this, listView);
+
+                    getNearbyPlacesData.execute(DataTransfer);
+
+                    Toast.makeText(MapsActivity.this, "Nearby Mashjid", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(MapsActivity.this, "Please Location Service Enabled", Toast.LENGTH_SHORT).show();
+                    return ;
+
+                }
+            }
+        });
+        btnAtmBooth.setOnClickListener(new View.OnClickListener() {
+            String atm = "atm";
+
+            @Override
+            public void onClick(View v) {
+
+                mMap.clear();
+                if(mLastLocation != null) {
+                String url = getUrl(mLastLocation.getLatitude(), mLastLocation.getLongitude(), atm);
+
+                    Object[] DataTransfer = new Object[2];
+                    DataTransfer[0] = mMap;
+                    DataTransfer[1] = url;
+                    Log.d("onClick", url);
+
+                    GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData(MapsActivity.this, listView);
+
+                    getNearbyPlacesData.execute(DataTransfer);
+
+                    Toast.makeText(MapsActivity.this, "Nearby atm", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(MapsActivity.this, "Please Location Service Enabled", Toast.LENGTH_SHORT).show();
+                    return ;
+
+                }
+            }
+        });
+
 
     }
     protected synchronized void initializedGoogleApiClient() {
@@ -213,7 +308,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
 
         //stop location updates
         if (mGoogleApiClient != null) {
@@ -221,5 +316,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    public boolean checkLocationPermission(){
 
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Asking user if explanation is needed
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+                //Prompt the user once explanation has been shown
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

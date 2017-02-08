@@ -31,25 +31,38 @@
             android2:layout_weight="1"
             android2:id="@+id/btnRestaurant"
             android2:text="Nearby Restaurants"
+            android2:background="#80000000"
+            android2:layout_marginBottom="3dp"
             android2:layout_width="match_parent"
             android2:layout_height="wrap_content"
 
             />
-
         <Button
-            android2:id="@+id/btnHospital"
+            android2:id="@+id/btnCafe"
             android2:layout_weight="1"
-            android2:text="Nearby Hospitals"
+            android2:text="Cafe"
+            android2:background="#80000000"
+            android2:layout_marginBottom="3dp"
             android2:layout_width="match_parent"
-            android2:layout_height="wrap_content"
+            android2:layout_height="match_parent"
             />
-
         <Button
-            android:id="@+id/btnSchool"
+            android2:id="@+id/btnMasjidBtn"
             android2:layout_weight="1"
-            android2:text="Nearby Schools"
+            android2:background="#80000000"
+            android2:layout_marginBottom="3dp"
+            android2:text="Masjid"
+            android2:layout_width="match_parent"
+            android2:layout_height="match_parent" />
+        <Button
+            android2:id="@+id/btnAtmBooth"
+            android2:layout_weight="1"
+            android2:background="#80000000"
+            android2:layout_marginBottom="3dp"
+            android2:text="Atm Booth"
             android2:layout_width="match_parent"
             android2:layout_height="wrap_content" />
+
 
 
     </LinearLayout>

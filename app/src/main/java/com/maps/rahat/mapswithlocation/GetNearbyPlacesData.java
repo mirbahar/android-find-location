@@ -77,7 +77,7 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
             Log.d("tt", "onPostExecute: "+result);
             DataParser dataParser = new DataParser();
             nearbyPlacesList =  dataParser.parse(result);
-          //  ShowNearbyPlaces(nearbyPlacesList);
+            ShowNearbyPlaces(nearbyPlacesList);
             listNearbyPlaces(nearbyPlacesList);
 
             Log.d("GooglePlacesReadTask", "onPostExecute Exit");
@@ -104,7 +104,7 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
             //move map camera
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
         }
     }
     private void listNearbyPlaces(List<HashMap<String, String>> nearbyPlacesList) {
