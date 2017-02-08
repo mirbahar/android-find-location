@@ -8,7 +8,6 @@
 
     >
 
-
     <fragment
 
         android2:layout_width="383dp"
@@ -25,6 +24,7 @@
         android2:layout_width="match_parent"
         android2:layout_height="wrap_content"
         android2:orientation="vertical"
+
         >
 
         <Button
@@ -35,8 +35,7 @@
             android2:layout_marginBottom="3dp"
             android2:layout_width="match_parent"
             android2:layout_height="wrap_content"
-
-            />
+        />
         <Button
             android2:id="@+id/btnCafe"
             android2:layout_weight="1"
